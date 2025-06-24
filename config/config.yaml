@@ -1,0 +1,102 @@
+# Project Configuration for Astrophysical Signal Denoising
+
+## Model Architectures
+model:
+  # Convolutional Autoencoder
+  conv_autoencoder:
+    input_length: 4096
+    hidden_dims: [128, 64, 32, 16]
+    kernel_size: 5
+    activation: 'relu'
+    dropout_rate: 0.1
+  
+  # U-Net Autoencoder  
+  unet_autoencoder:
+    input_length: 4096
+    base_channels: 32
+    depth: 4
+    kernel_size: 5
+  
+  # LSTM Autoencoder
+  lstm_autoencoder:
+    input_size: 1
+    hidden_size: 128
+    num_layers: 2
+    dropout_rate: 0.1
+    bidirectional: true
+
+## Training Configuration
+training:
+  epochs: 100
+  batch_size: 32
+  learning_rate: 0.001
+  optimizer: 'adam'
+  criterion: 'mse'
+  scheduler: 'plateau'
+  early_stopping_patience: 15
+  save_best: true
+  
+  # Data splits
+  train_split: 0.7
+  val_split: 0.2
+  test_split: 0.1
+
+## Signal Generation Parameters
+signals:
+  gravitational_wave:
+    duration: 1.0
+    sampling_rate: 4096
+    mass_range: [20, 50]  # Solar masses
+    distance_range: [200, 800]  # Mpc
+    
+  pulsar:
+    duration: 5.0
+    sampling_rate: 4096
+    period_range: [0.001, 2.0]  # seconds
+    duty_cycle_range: [0.01, 0.2]
+    dm_range: [10, 200]  # pc cm^-3
+
+## Noise Models
+noise:
+  gaussian:
+    snr_range: [3, 20]  # dB
+  
+  colored:
+    snr_range: [3, 20]  # dB
+    psd_models: ['LIGO_design', 'advanced_LIGO', 'pink', 'brown']
+  
+  glitches:
+    probability: 0.1
+    rate: 1.0  # per second
+    types: ['blip', 'whistle', 'wandering_line']
+
+## Dataset Generation
+dataset:
+  num_samples: 10000
+  signal_type: 'gravitational_wave'  # or 'pulsar'
+  normalize: true
+  augmentation: true
+
+## Evaluation Metrics
+evaluation:
+  metrics:
+    - 'snr_improvement'
+    - 'pearson_correlation'  
+    - 'mse'
+    - 'rmse'
+    - 'mae'
+    - 'ssim'
+    - 'psnr'
+    - 'spectral_correlation'
+  
+  visualization:
+    time_domain: true
+    frequency_domain: true
+    metrics_summary: true
+    
+## Paths
+paths:
+  data_dir: './data'
+  models_dir: './models'
+  results_dir: './results'
+  notebooks_dir: './notebooks'

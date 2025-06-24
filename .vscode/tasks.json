@@ -1,0 +1,38 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Install Dependencies",
+			"type": "shell",
+			"command": "C:/Users/singh/The_clarifyer/.venv/Scripts/pip.exe",
+			"args": [
+				"install",
+				"-r",
+				"requirements.txt"
+			],
+			"group": "build",
+			"problemMatcher": []
+		},
+		{
+			"label": "Run Example",
+			"type": "shell",
+			"command": "C:/Users/singh/The_clarifyer/.venv/Scripts/python.exe",
+			"args": [
+				"example.py"
+			],
+			"group": "test",
+			"problemMatcher": ["$python"]
+		},
+		{
+			"label": "Test Imports",
+			"type": "shell",
+			"command": "C:/Users/singh/The_clarifyer/.venv/Scripts/python.exe",
+			"args": [
+				"-c",
+				"import sys; sys.path.append('src'); from signal_simulation import *; from noise_models import *; from models import *; print('✓ All imports successful')"
+			],
+			"group": "test",
+			"problemMatcher": ["$python"]
+		}
+	]
+}
